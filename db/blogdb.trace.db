@@ -1,0 +1,6 @@
+2026-02-26 15:21:36.626150+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "delete [*]* from post"; expected "identifier"; SQL statement:
+delete * from post [42001-240]
+2026-02-26 15:35:04.030893+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "select * from[*]"; expected "identifier"; SQL statement:
+select * from [42001-240]

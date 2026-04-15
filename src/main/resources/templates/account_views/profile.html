@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"></head>
+
+
+
+<body class="sub_page">
+
+    <div class="hero_area">
+        <div class="bg-box">
+            <img th:src="@{/images/hero-bg.jpg}" alt="avatar">
+        </div>
+        <form> <!-- upload form -->
+            <input type="file" ... />
+            <button>Upload</button>
+        </form>
+        <header th:replace="fragments/header :: header"></header>
+    </div>
+
+    <section class="book_section layout_padding">
+        <div class="container">
+            <div class="heading_container">
+                <h3>Profile</h3>
+                <img th:src="${photo}" class="rounded-circle" style="width: 150px; float: left; padding: 10px;"
+                    alt="avatar" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form_container">
+
+                        <form th:action="@{/profile}" th:object="${account}" method="post">
+                            <input type="hidden" name="id" id="id" th:field="*{id}" />
+                            <!-- First Name -->
+                            <div>
+                                <input type="text" class="form-control" placeholder="First Name" th:field="*{firstName}"
+                                    required />
+                                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                                    class="alert alert-danger"></p>
+                            </div>
+
+                            <!-- Last Name -->
+                            <div>
+                                <input type="text" class="form-control" placeholder="Last Name" th:field="*{lastName}"
+                                    required />
+                                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                    class="alert alert-danger"></p>
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <input type="email" class="form-control" placeholder="Email" th:field="*{email}"
+                                    required />
+                                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                    class="alert alert-danger"></p>
+                            </div>
+
+                            <!-- Password -->
+                            <div>
+                                <input type="password" class="form-control" placeholder="Password"
+                                    th:field="*{password}" required />
+                                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                    class="alert alert-danger"></p>
+                            </div>
+
+                            <!-- Age -->
+                            <div>
+                                <input type="number" min="18" max="99" class="form-control" placeholder="Age"
+                                    th:field="*{age}" />
+                                <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="alert alert-danger">
+                                </p>
+                            </div>
+
+                            <!-- Date of Birth -->
+                            <div>
+                                <input type="date" class="form-control" th:field="*{date_of_birth}" />
+                                <p th:if="${#fields.hasErrors('date_of_birth')}" th:errors="*{date_of_birth}"
+                                    class="alert alert-danger"></p>
+                            </div>
+
+                            <!-- Gender -->
+                            <div>
+                                <select class="form-control" th:field="*{gender}">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
+                                    class="alert alert-danger"></p>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="btn_box">
+                                <button type="submit">Update Profile</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+
+
+
+</body>
+
+</html>

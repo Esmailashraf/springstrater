@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <div class="bg-box">
+      <img th:src="@{/images/hero-bg.jpg}" alt="">
+    </div>
+
+    <header th:replace="fragments/header :: header"></header>
+  </div>
+
+  <!-- FILTER FORM -->
+  <form method="get" th:action="@{/}">
+    <nav class="navbar navbar-light bg-light">
+
+      <div class="form-inline">
+
+        <!-- Page Size -->
+        <label class="mr-2">Size:</label>
+        <select name="pageSize" class="form-control mr-3">
+          <option value="5" th:selected="${pageSize == 5}">5</option>
+          <option value="10" th:selected="${pageSize == 10}">10</option>
+          <option value="20" th:selected="${pageSize == 20}">20</option>
+          <option value="50" th:selected="${pageSize == 50}">50</option>
+        </select>
+
+        <!-- Sort By -->
+        <label class="mr-2">Sort By:</label>
+        <select name="sortBy" class="form-control mr-3">
+          <option value="createdAt" th:selected="${sortBy == 'createdAt'}">Created At</option>
+          <option value="updatedAt" th:selected="${sortBy == 'updatedAt'}">Updated At</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">
+          Apply Filter
+        </button>
+
+      </div>
+    </nav>
+  </form>
+
+  <!-- POSTS -->
+  <section class="about_section layout_padding">
+    <div class="container">
+
+      <div class="posts" th:each="post : ${posts}">
+        <h3>
+          <a th:href="@{'/post/' + ${post.id}}" th:text="${post.title}"></a>
+        </h3>
+
+        <h5 th:text="'Author: ' + ${post.account.firstName}
+                + ' | createdAt: ' + ${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}
+                + ' | updatedAt: ' + ${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm')}">
+        </h5>
+
+        <p th:utext="${post.body}"></p>
+
+        <hr>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGINATION -->
+  <section class="container mt-4">
+
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+
+        <!-- Previous -->
+        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+          <a class="page-link" th:href="@{/(pageNumber=${currentPage - 1}, pageSize=${pageSize}, sortBy=${sortBy})}">
+            Previous
+          </a>
+        </li>
+
+        <!-- Pages -->
+        <li class="page-item" th:each="page : ${pages}" th:classappend="${page + 1 == currentPage} ? 'active'">
+
+          <a class="page-link" th:text="${page + 1}"
+            th:href="@{/(pageNumber=${page + 1}, pageSize=${pageSize}, sortBy=${sortBy})}">
+          </a>
+        </li>
+
+        <!-- Next -->
+        <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+
+          <a class="page-link" th:href="@{/(pageNumber=${currentPage + 1}, pageSize=${pageSize}, sortBy=${sortBy})}">
+            Next
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+
+  </section>
+
+  <footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+
+</html>
